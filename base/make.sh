@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -eou pipefail
+
+download https://ftp.gnu.org/gnu/make/make-4.2.1.tar.gz
+
+../configure \
+    --prefix=${TOOLCHAIN} \
+    --without-guile
+make
+make install
