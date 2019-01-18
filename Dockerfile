@@ -181,6 +181,9 @@ RUN build.sh /src/extras/bc.sh
 # git
 COPY extras/git.sh .
 RUN build.sh /src/extras/git.sh
+# cpio
+COPY extras/cpio.sh .
+RUN build.sh /src/extras/cpio.sh
 # cleanup
 COPY extras/strip.sh .
 RUN ./strip.sh
