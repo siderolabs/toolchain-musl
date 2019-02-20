@@ -204,4 +204,6 @@ COPY toolchain/musl.sh .
 RUN build.sh /src/toolchain/musl.sh
 COPY toolchain/adjust.sh .
 RUN ./adjust.sh
+COPY toolchain/linux.sh .
+RUN ./linux.sh
 ENV PATH /bin:/usr/bin:/usr/local/bin:/toolchain/bin
