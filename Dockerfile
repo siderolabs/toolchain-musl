@@ -3,11 +3,11 @@
 # The common stage provides...
 
 FROM alpine:3.8 AS common
-ENV ARCH x86_64
+ENV ARCH arm
 ENV VENDOR talos
-ENV HOST x86_64-linux-musl
-ENV BUILD x86_64-linux-musl
-ENV TARGET ${ARCH}-${VENDOR}-linux-musl
+ENV HOST arm-linux-musleabihf
+ENV BUILD arm-linux-musleabihf
+ENV TARGET ${ARCH}-${VENDOR}-linux-mumusleabihf
 ENV SYSROOT /${VENDOR}
 ENV TOOLCHAIN /toolchain
 ENV PATH ${TOOLCHAIN}/bin:$PATH
@@ -76,52 +76,52 @@ COPY base/bzip2.sh .
 RUN build.sh /src/base/bzip2.sh
 # coreutils
 COPY base/coreutils.sh .
-RUN build.sh /src/base/coreutils.sh
-# diffutils
-COPY base/diffutils.sh .
-RUN build.sh /src/base/diffutils.sh
-# file
-COPY base/file.sh .
-RUN build.sh /src/base/file.sh
-# findutils
-COPY base/findutils.sh .
-RUN build.sh /src/base/findutils.sh
-# gawk
-COPY base/gawk.sh .
-RUN build.sh /src/base/gawk.sh
-# gettext
-COPY base/gettext.sh .
-RUN build.sh /src/base/gettext.sh
-# grep
-COPY base/grep.sh .
-RUN build.sh /src/base/grep.sh
-# gzip
-COPY base/gzip.sh .
-RUN build.sh /src/base/gzip.sh
-# make
-COPY base/make.sh .
-RUN build.sh /src/base/make.sh
-# patch
-COPY base/patch.sh .
-RUN build.sh /src/base/patch.sh
-# perl
-COPY base/perl.sh .
-RUN build.sh /src/base/perl.sh
-# sed
-COPY base/sed.sh .
-RUN build.sh /src/base/sed.sh
-# tar
-COPY base/tar.sh .
-RUN build.sh /src/base/tar.sh
-# texinfo
-COPY base/texinfo.sh .
-RUN build.sh /src/base/texinfo.sh
-# util
-COPY base/util-linux.sh .
-RUN build.sh /src/base/util-linux.sh
-# xz
-COPY base/xz.sh .
-RUN build.sh /src/base/xz.sh
+#RUN build.sh /src/base/coreutils.sh
+## diffutils
+#COPY base/diffutils.sh .
+#RUN build.sh /src/base/diffutils.sh
+## file
+#COPY base/file.sh .
+#RUN build.sh /src/base/file.sh
+## findutils
+#COPY base/findutils.sh .
+#RUN build.sh /src/base/findutils.sh
+## gawk
+#COPY base/gawk.sh .
+#RUN build.sh /src/base/gawk.sh
+## gettext
+#COPY base/gettext.sh .
+#RUN build.sh /src/base/gettext.sh
+## grep
+#COPY base/grep.sh .
+#RUN build.sh /src/base/grep.sh
+## gzip
+#COPY base/gzip.sh .
+#RUN build.sh /src/base/gzip.sh
+## make
+#COPY base/make.sh .
+#RUN build.sh /src/base/make.sh
+## patch
+#COPY base/patch.sh .
+#RUN build.sh /src/base/patch.sh
+## perl
+#COPY base/perl.sh .
+#RUN build.sh /src/base/perl.sh
+## sed
+#COPY base/sed.sh .
+#RUN build.sh /src/base/sed.sh
+## tar
+#COPY base/tar.sh .
+#RUN build.sh /src/base/tar.sh
+## texinfo
+#COPY base/texinfo.sh .
+#RUN build.sh /src/base/texinfo.sh
+## util
+#COPY base/util-linux.sh .
+#RUN build.sh /src/base/util-linux.sh
+## xz
+#COPY base/xz.sh .
+#RUN build.sh /src/base/xz.sh
 
 # The extras stage provides...
 

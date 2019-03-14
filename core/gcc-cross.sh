@@ -3,7 +3,7 @@ download https://ftp.gnu.org/gnu/gmp/gmp-6.1.2.tar.xz gmp
 download https://ftp.gnu.org/gnu/mpc/mpc-1.1.0.tar.gz mpc
 download https://ftp.gnu.org/gnu/gcc/gcc-8.3.0/gcc-8.3.0.tar.xz
 
-for file in ../gcc/config/{linux,i386/linux{,64}}.h; do
+for file in ../gcc/config/{arm/{linux-eabi,linux-elf},linux,i386/linux{,64}}.h; do
   cp -uv $file{,.orig}
   sed -e "s@/lib\(64\)\?\(32\)\?/ld@${TOOLCHAIN}&@g" \
       -e "s@/usr@${TOOLCHAIN}@g" $file.orig > $file
