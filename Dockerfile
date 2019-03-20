@@ -188,11 +188,22 @@ RUN build.sh /src/extras/cpio.sh
 COPY extras/strip.sh .
 RUN ./strip.sh
 
+# The golang stage provides...
+
+FROM extras AS golang
+WORKDIR /src/golang
+# common Go env
+ENV CGO_ENABLED 0
+ENV GOLANG_VERSION 1.12.1
+# go
+COPY golang/go.sh .
+RUN build.sh /src/golang/go.sh
+
 # The toolchain stage provides the final image for the toolchain.
 
 FROM scratch AS toolchain
 ENV PATH /toolchain/bin
-COPY --from=extras /talos/toolchain /toolchain
+COPY --from=golang /talos/toolchain /toolchain
 COPY build.sh /toolchain/bin
 SHELL [ "/toolchain/bin/bash", "-c" ]
 RUN mkdir /bin
@@ -206,4 +217,6 @@ COPY toolchain/adjust.sh .
 RUN ./adjust.sh
 COPY toolchain/linux.sh .
 RUN ./linux.sh
-ENV PATH /bin:/usr/bin:/usr/local/bin:/toolchain/bin
+ENV GOROOT /toolchain/go
+ENV CGO_ENABLED 0
+ENV PATH /bin:/usr/bin:/usr/local/bin:/toolchain/bin:/toolchain/go/bin
