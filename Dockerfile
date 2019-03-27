@@ -199,11 +199,23 @@ ENV GOLANG_VERSION 1.12.1
 COPY golang/go.sh .
 RUN build.sh /src/golang/go.sh
 
+# The protoc stage provides...
+
+FROM golang AS protoc
+WORKDIR /src/protoc
+# protoc
+COPY protoc/protoc.sh .
+COPY protoc/patches/musl-fix.patch .
+RUN build.sh /src/protoc/protoc.sh
+# protoc-gen-go
+COPY protoc/protoc-gen-go.sh .
+RUN build.sh /src/protoc/protoc-gen-go.sh
+
 # The toolchain stage provides the final image for the toolchain.
 
 FROM scratch AS toolchain
 ENV PATH /toolchain/bin
-COPY --from=golang /talos/toolchain /toolchain
+COPY --from=protoc /talos/toolchain /toolchain
 COPY build.sh /toolchain/bin
 SHELL [ "/toolchain/bin/bash", "-c" ]
 RUN mkdir /bin

@@ -39,6 +39,13 @@ golang:
 		--target=$@ \
 		-f ./Dockerfile .
 
+.PHONY: protoc
+protoc:
+	@docker build \
+		-t autonomy/$@:$(SHA) \
+		--target=$@ \
+		-f ./Dockerfile .
+
 .PHONY: toolchain
 toolchain:
 	@docker build \
