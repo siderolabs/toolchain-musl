@@ -22,6 +22,8 @@ RUN version-check.sh
 # The core stage provides...
 
 FROM common AS core
+WORKDIR /src
+COPY core/checksums.* .
 WORKDIR /src/core
 # binutils-cross
 COPY core/binutils-cross.sh .
@@ -49,6 +51,8 @@ RUN build.sh /src/core/gcc-native.sh
 
 FROM common AS base
 COPY --from=core ${SYSROOT} ${SYSROOT}
+WORKDIR /src
+COPY base/checksums.* .
 WORKDIR /src/base
 # tcl
 COPY base/tcl.sh .
@@ -126,8 +130,10 @@ RUN build.sh /src/base/xz.sh
 # The extras stage provides...
 
 FROM common AS extras
-WORKDIR /src/extras
 COPY --from=base ${SYSROOT} ${SYSROOT}
+WORKDIR /src
+COPY extras/checksums.* .
+WORKDIR /src/extras
 # ca-certificates
 COPY extras/ca-certificates.sh .
 RUN build.sh /src/extras/ca-certificates.sh
@@ -191,10 +197,11 @@ RUN ./strip.sh
 # The golang stage provides...
 
 FROM extras AS golang
+WORKDIR /src
+COPY golang/checksums.* .
 WORKDIR /src/golang
 # common Go env
 ENV CGO_ENABLED 0
-ENV GOLANG_VERSION 1.12.1
 # go
 COPY golang/go.sh .
 RUN build.sh /src/golang/go.sh
@@ -202,6 +209,8 @@ RUN build.sh /src/golang/go.sh
 # The protoc stage provides...
 
 FROM golang AS protoc
+WORKDIR /src
+COPY protoc/checksums.* .
 WORKDIR /src/protoc
 # protoc
 COPY protoc/protoc.sh .
@@ -222,13 +231,15 @@ RUN mkdir /bin
 RUN mkdir /tmp
 RUN ln -sv bash /bin/sh
 RUN ln -sv /toolchain/bin/bash /bin/bash
+WORKDIR /src
+COPY toolchain/checksums.* .
 WORKDIR /src/toolchain
 COPY toolchain/musl.sh .
 RUN build.sh /src/toolchain/musl.sh
 COPY toolchain/adjust.sh .
 RUN ./adjust.sh
 COPY toolchain/linux.sh .
-RUN ./linux.sh
+RUN build.sh /src/toolchain/linux.sh
 ENV GOROOT /toolchain/go
 ENV CGO_ENABLED 0
 ENV PATH /bin:/usr/bin:/usr/local/bin:/toolchain/bin:/toolchain/go/bin

@@ -20,7 +20,7 @@ cd ..
 mkdir -p go/build
 cd go/build
 
-download https://dl.google.com/go/go${GOLANG_VERSION}.src.tar.gz
+download https://dl.google.com/go/go1.12.1.src.tar.gz
 
 cd ../src
 
