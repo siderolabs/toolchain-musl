@@ -1,1 +1,4 @@
-curl --retry 5 --retry-delay 0 --retry-max-time 45 -L https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.19.31.tar.xz -o /tmp/linux.tar.xz
+download -s https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.19.31.tar.xz
+
+cd ..
+mv linux-4.19.31.tar.xz /tmp/linux.tar.xz
