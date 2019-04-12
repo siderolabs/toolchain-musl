@@ -1,10 +1,10 @@
-download https://www.musl-libc.org/releases/musl-1.1.21.tar.gz
+download https://www.musl-libc.org/releases/musl-${musl}.tar.gz
 
 ../configure \
     --prefix=${TOOLCHAIN} \
     --syslibdir=${TOOLCHAIN}/lib \
     CROSS_COMPILE=${TARGET}-
-make
+make -j $(nproc)
 make install
 
 echo 'int main(){}' > dummy.c

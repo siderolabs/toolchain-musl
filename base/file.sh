@@ -2,9 +2,9 @@
 
 set -eou pipefail
 
-download ftp://ftp.astron.com/pub/file/file-5.34.tar.gz
+download ftp://ftp.astron.com/pub/file/file-${file}.tar.gz
 
 ../configure \
     --prefix=${TOOLCHAIN}
-make
+make -j $(nproc)
 make install

@@ -2,9 +2,9 @@
 
 set -eou pipefail
 
-download https://ftp.gnu.org/gnu/sed/sed-4.5.tar.xz
+download https://ftp.gnu.org/gnu/sed/sed-${sed}.tar.xz
 
 ../configure \
     --prefix=${TOOLCHAIN}
-make
+make -j $(nproc)
 make install

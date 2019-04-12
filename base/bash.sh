@@ -3,11 +3,10 @@
 set -eou pipefail
 
 
-download https://ftp.gnu.org/gnu/bash/bash-4.4.18.tar.gz
+download https://ftp.gnu.org/gnu/bash/bash-${bash}.tar.gz
 
 ../configure \
     --prefix=${TOOLCHAIN} \
     --without-bash-malloc
-make
-make
+make -j $(nproc)
 make install

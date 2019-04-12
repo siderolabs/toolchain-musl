@@ -2,9 +2,9 @@
 
 set -eou pipefail
 
-download https://tukaani.org/xz/xz-5.2.4.tar.xz
+download https://tukaani.org/xz/xz-${xz}.tar.xz
 
 ../configure \
     --prefix=${TOOLCHAIN}
-make
+make -j $(nproc)
 make install

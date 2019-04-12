@@ -2,8 +2,8 @@
 
 set -eou pipefail
 
-download https://ftp.gnu.org/gnu/m4/m4-1.4.18.tar.xz
+download https://ftp.gnu.org/gnu/m4/m4-${m4}.tar.xz
 
 ../configure --prefix=${TOOLCHAIN}
-make
+make -j $(nproc)
 make install

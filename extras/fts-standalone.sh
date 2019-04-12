@@ -1,8 +1,8 @@
-download https://github.com/pullmoll/musl-fts/archive/v1.2.7/musl-fts-1.2.7.tar.gz
+download https://github.com/pullmoll/musl-fts/archive/v${muslFts}/musl-fts-${muslFts}.tar.gz
 cd ..
 ./bootstrap.sh
 cd -
 ../configure \
     --prefix=${TOOLCHAIN}
-make
+make -j $(nproc)
 make install

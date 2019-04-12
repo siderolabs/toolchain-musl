@@ -1,5 +1,5 @@
-download http://ftpmirror.gnu.org/libtool/libtool-2.4.6.tar.gz
+download http://ftpmirror.gnu.org/libtool/libtool-${libtool}.tar.gz
 ../configure \
     --prefix=${TOOLCHAIN}
-make
+make -j $(nproc)
 make install

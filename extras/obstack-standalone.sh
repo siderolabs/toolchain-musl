@@ -1,8 +1,8 @@
-download https://github.com/pullmoll/musl-obstack/archive/v1.1/musl-obstack-1.1.tar.gz
+download https://github.com/pullmoll/musl-obstack/archive/v${muslObstack}/musl-obstack-${muslObstack}.tar.gz
 cd ..
 ./bootstrap.sh
 cd -
 ../configure \
     --prefix=${TOOLCHAIN}
-make
+make -j $(nproc)
 make install

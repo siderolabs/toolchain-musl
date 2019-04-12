@@ -1,4 +1,4 @@
-download https://ftp.gnu.org/gnu/binutils/binutils-2.31.1.tar.xz
+download https://ftp.gnu.org/gnu/binutils/binutils-${binutils}.tar.xz
 
 ../configure \
     --build=${HOST} \
@@ -9,5 +9,5 @@ download https://ftp.gnu.org/gnu/binutils/binutils-2.31.1.tar.xz
     --with-lib-path=${TOOLCHAIN}/lib \
     --disable-nls \
     --disable-werror
-make
+make -j $(nproc)
 make install

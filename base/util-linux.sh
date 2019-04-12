@@ -2,7 +2,7 @@
 
 set -eou pipefail
 
-download https://www.kernel.org/pub/linux/utils/util-linux/v2.32/util-linux-2.32.1.tar.xz
+download https://www.kernel.org/pub/linux/utils/util-linux/v2.32/util-linux-${utilLinux}.tar.xz
 
 ../configure \
     --prefix=${TOOLCHAIN} \
@@ -11,5 +11,5 @@ download https://www.kernel.org/pub/linux/utils/util-linux/v2.32/util-linux-2.32
     --without-systemdsystemunitdir \
     --without-ncurses \
     PKG_CONFIG=""
-make
+make -j $(nproc)
 make install
