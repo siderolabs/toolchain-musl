@@ -67,6 +67,7 @@ toolchain:
 		--exporter-opt name=docker.io/autonomy/$@:$(TAG) \
 		--frontend-opt target=$@ \
 		$(COMMON_ARGS)
+	@docker load < $@.tar
 
 .PHONY: login
 login:
