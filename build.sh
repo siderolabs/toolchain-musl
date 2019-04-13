@@ -26,11 +26,11 @@ download() {
     TAR="tar --strip-components=1"
 
     if [[ ${1} == *.xz ]]; then
-        TAR="${TAR} -xJv"
+        TAR="${TAR} -xJ"
     elif [[ ${1} == *.gz || ${1} == *.tgz ]]; then
-        TAR="${TAR} -xzv"
+        TAR="${TAR} -xz"
     elif [[ ${1} == *.bz2 ]]; then
-        TAR="${TAR} -xjv"
+        TAR="${TAR} -xj"
     else
         exit 1
     fi

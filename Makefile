@@ -1,58 +1,79 @@
-SHA := $(shell gitmeta git sha)
 TAG := $(shell gitmeta image tag)
-BUILT := $(shell gitmeta built)
 
-COMMON_ARGS := -f ./Dockerfile .
-
-export DOCKER_BUILDKIT := 1
+COMMON_ARGS = --progress=plain
+COMMON_ARGS += --frontend=dockerfile.v0
+COMMON_ARGS += --local context=.
+COMMON_ARGS += --local dockerfile=.
+COMMON_ARGS += --frontend-opt build-arg:TOOLCHAIN_IMAGE=$(TOOLCHAIN_IMAGE)
 
 all: toolchain
 
-enforce:
-	@conform enforce
-
 .PHONY: core
 core:
-	@docker build \
-		-t autonomy/$@:$(SHA) \
-		--target=$@ \
-		-f ./Dockerfile .
+	@buildctl --addr $(BUILDKIT_HOST) \
+		build \
+		--exporter=docker \
+		--exporter-opt output=$@.tar \
+		--exporter-opt name=docker.io/autonomy/$@:$(TAG) \
+		--frontend-opt target=$@ \
+		$(COMMON_ARGS)
 
 .PHONY: base
 base:
-	@docker build \
-		-t autonomy/$@:$(SHA) \
-		--target=$@ \
-		-f ./Dockerfile .
+	@buildctl --addr $(BUILDKIT_HOST) \
+		build \
+		--exporter=docker \
+		--exporter-opt output=$@.tar \
+		--exporter-opt name=docker.io/autonomy/$@:$(TAG) \
+		--frontend-opt target=$@ \
+		$(COMMON_ARGS)
 
 .PHONY: extras
 extras:
-	@docker build \
-		-t autonomy/$@:$(SHA) \
-		--target=$@ \
-		-f ./Dockerfile .
+	@buildctl --addr $(BUILDKIT_HOST) \
+		build \
+		--exporter=docker \
+		--exporter-opt output=$@.tar \
+		--exporter-opt name=docker.io/autonomy/$@:$(TAG) \
+		--frontend-opt target=$@ \
+		$(COMMON_ARGS)
 
 .PHONY: golang
 golang:
-	@docker build \
-		-t autonomy/$@:$(SHA) \
-		--target=$@ \
-		-f ./Dockerfile .
+	@buildctl --addr $(BUILDKIT_HOST) \
+		build \
+		--exporter=docker \
+		--exporter-opt output=$@.tar \
+		--exporter-opt name=docker.io/autonomy/$@:$(TAG) \
+		--frontend-opt target=$@ \
+		$(COMMON_ARGS)
 
 .PHONY: protoc
 protoc:
-	@docker build \
-		-t autonomy/$@:$(SHA) \
-		--target=$@ \
-		-f ./Dockerfile .
+	@buildctl --addr $(BUILDKIT_HOST) \
+		build \
+		--exporter=docker \
+		--exporter-opt output=$@.tar \
+		--exporter-opt name=docker.io/autonomy/$@:$(TAG) \
+		--frontend-opt target=$@ \
+		$(COMMON_ARGS)
 
 .PHONY: toolchain
 toolchain:
-	@docker build \
-		-t autonomy/$@:$(SHA) \
-		--target=$@ \
-		-f ./Dockerfile .
+	@buildctl --addr $(BUILDKIT_HOST) \
+		build \
+		--exporter=docker \
+		--exporter-opt output=$@.tar \
+		--exporter-opt name=docker.io/autonomy/$@:$(TAG) \
+		--frontend-opt target=$@ \
+		$(COMMON_ARGS)
 
-deps:
-	@GO111MODULES=on CGO_ENABLED=0 go get -u github.com/autonomy/gitmeta
-	@GO111MODULES=on CGO_ENABLED=0 go get -u github.com/autonomy/conform
+.PHONY: login
+login:
+	@docker login --username "$(DOCKER_USERNAME)" --password "$(DOCKER_PASSWORD)"
+
+.PHONY: push
+push:
+	@docker tag autonomy/toolchain:$(TAG) autonomy/toolchain:latest
+	@docker push autonomy/toolchain:$(TAG)
+	@docker push autonomy/toolchain:latest
