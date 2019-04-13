@@ -1,6 +1,6 @@
-download https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-2.9.0.tar.gz
+download https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-${libressl}.tar.gz
 
 ../configure \
     --prefix=${TOOLCHAIN}
-make
+make -j $(nproc)
 make install

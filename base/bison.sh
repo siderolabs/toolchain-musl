@@ -2,10 +2,10 @@
 
 set -eou pipefail
 
-download https://ftp.gnu.org/gnu/bison/bison-3.0.5.tar.xz
+download https://ftp.gnu.org/gnu/bison/bison-${bison}.tar.xz
 
 ../configure \
     --prefix=${TOOLCHAIN} \
     FORCE_UNSAFE_CONFIGURE=1
-make
+make -j $(nproc)
 make install

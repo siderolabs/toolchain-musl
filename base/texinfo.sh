@@ -2,9 +2,9 @@
 
 set -eou pipefail
 
-download https://ftp.gnu.org/gnu/texinfo/texinfo-6.5.tar.xz
+download https://ftp.gnu.org/gnu/texinfo/texinfo-${texinfo}.tar.xz
 
 ../configure \
     --prefix=${TOOLCHAIN}
-make
+make -j $(nproc)
 make install

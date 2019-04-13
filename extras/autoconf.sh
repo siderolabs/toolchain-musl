@@ -1,5 +1,5 @@
-download https://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.xz
+download https://ftp.gnu.org/gnu/autoconf/autoconf-${autoconf}.tar.xz
 ../configure \
     --prefix=${TOOLCHAIN}
-make
+make -j $(nproc)
 make install

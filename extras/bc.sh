@@ -1,4 +1,4 @@
-download https://ftp.gnu.org/gnu/bc/bc-1.07.1.tar.gz
+download https://ftp.gnu.org/gnu/bc/bc-${bc}.tar.gz
 
 export LD_LIBRARY_PATH=${TOOLCHAIN}/lib
 
@@ -21,5 +21,5 @@ sed -i -e '/flex/s/as_fn_error/: ;; # &/' ../configure
     --with-readline \
     --mandir=${TOOLCHAIN}/share/man \
     --infodir=${TOOLCHAIN}/share/info
-make
+make -j $(nproc)
 make install

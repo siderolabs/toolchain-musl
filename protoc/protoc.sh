@@ -1,4 +1,4 @@
-download https://github.com/protocolbuffers/protobuf/releases/download/v3.6.1/protobuf-cpp-3.6.1.tar.gz
+download https://github.com/protocolbuffers/protobuf/releases/download/v${protobuf}/protobuf-cpp-${protobuf}.tar.gz
 
 cd ..
 
@@ -8,5 +8,5 @@ cd ..
 
 patch -Np1 -i /src/protoc/musl-fix.patch
 
-make
+make -j $(nproc)
 make install

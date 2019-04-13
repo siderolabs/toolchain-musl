@@ -2,7 +2,7 @@
 
 set -eou pipefail
 
-download https://www.cpan.org/src/5.0/perl-5.28.0.tar.xz
+download https://www.cpan.org/src/5.0/perl-${perl}.tar.xz
 
 cd ../
 
@@ -12,7 +12,7 @@ sh Configure \
     -Dlibs=-lm \
     -Uloclibpth \
     -Ulocincpth
-make
+make -j $(nproc)
 cp -v perl cpan/podlators/scripts/pod2man ${TOOLCHAIN}/bin
-mkdir -pv ${TOOLCHAIN}/lib/perl5/5.28.0
-cp -Rv lib/* ${TOOLCHAIN}/lib/perl5/5.28.0
+mkdir -pv ${TOOLCHAIN}/lib/perl5/${perl}
+cp -Rv lib/* ${TOOLCHAIN}/lib/perl5/${perl}

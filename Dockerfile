@@ -16,6 +16,7 @@ RUN mkdir -p ${SYSROOT}${TOOLCHAIN}
 RUN ln -sv ${SYSROOT}${TOOLCHAIN} ${TOOLCHAIN}
 RUN [ "ln", "-svf", "/bin/bash", "/bin/sh" ]
 COPY build.sh /bin
+COPY versions.sh /bin
 COPY common/version-check.sh /bin
 RUN version-check.sh
 
@@ -226,6 +227,7 @@ FROM scratch AS toolchain
 ENV PATH /toolchain/bin
 COPY --from=protoc /talos/toolchain /toolchain
 COPY build.sh /toolchain/bin
+COPY versions.sh /toolchain/bin
 SHELL [ "/toolchain/bin/bash", "-c" ]
 RUN mkdir /bin
 RUN mkdir /tmp

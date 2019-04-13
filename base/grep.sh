@@ -2,9 +2,9 @@
 
 set -eou pipefail
 
-download https://ftp.gnu.org/gnu/grep/grep-3.1.tar.xz
+download https://ftp.gnu.org/gnu/grep/grep-${grep}.tar.xz
 
 ../configure \
     --prefix=${TOOLCHAIN}
-make
+make -j $(nproc)
 make install

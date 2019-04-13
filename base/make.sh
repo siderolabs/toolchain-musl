@@ -2,10 +2,10 @@
 
 set -eou pipefail
 
-download https://ftp.gnu.org/gnu/make/make-4.2.1.tar.gz
+download https://ftp.gnu.org/gnu/make/make-${make}.tar.gz
 
 ../configure \
     --prefix=${TOOLCHAIN} \
     --without-guile
-make
+make -j $(nproc)
 make install

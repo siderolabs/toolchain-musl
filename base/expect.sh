@@ -2,7 +2,7 @@
 
 set -eou pipefail
 
-download https://downloads.sourceforge.net/expect/expect5.45.4.tar.gz
+download https://downloads.sourceforge.net/expect/expect${expect}.tar.gz
 
 cp -v ../configure{,.orig}
 sed 's:/usr/local/bin:/bin:' ../configure.orig > ../configure
@@ -11,5 +11,5 @@ sed 's:/usr/local/bin:/bin:' ../configure.orig > ../configure
     --prefix=${TOOLCHAIN} \
     --with-tcl=${TOOLCHAIN}/lib \
     --with-tclinclude=${TOOLCHAIN}/include
-make
+make -j $(nproc)
 make SCRIPTS="" install

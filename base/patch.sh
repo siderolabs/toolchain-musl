@@ -2,9 +2,9 @@
 
 set -eou pipefail
 
-download https://ftp.gnu.org/gnu/patch/patch-2.7.6.tar.xz
+download https://ftp.gnu.org/gnu/patch/patch-${patch}.tar.xz
 
 ../configure \
     --prefix=${TOOLCHAIN}
-make
+make -j $(nproc)
 make install

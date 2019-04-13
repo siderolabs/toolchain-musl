@@ -1,6 +1,6 @@
-download https://ftp.gnu.org/gnu/cpio/cpio-2.12.tar.gz
+download https://ftp.gnu.org/gnu/cpio/cpio-${cpio}.tar.gz
 
 ../configure \
     --prefix=${TOOLCHAIN}
-make
+make -j $(nproc)
 make install
