@@ -20,6 +20,9 @@ steps:
     BUILDKIT_HOST: tcp://buildkitd.ci.svc:1234
   commands:
     - make
+    - make images
+    - make rootfs-base
+    - make initramfs-base
   volumes:
   - name: dockersock
     path: /var/run

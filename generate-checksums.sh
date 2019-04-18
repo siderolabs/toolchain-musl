@@ -1,12 +1,16 @@
 #!/bin/bash
 
+set -eou pipefail
+
 if [ "$#" -ne 1 ]; then
     echo "Please pass stage name"
 fi
 
+source versions.sh
+
 stage="$1"
 
-urls=`grep -h 'download ' "${stage}"/*.sh | awk '$2 ~ /^-/ { print $3; next } { print $2 }' | sort | uniq`
+urls=`grep -h 'download ' "${stage}"/*.sh | awk '$2 ~ /^-/ { print $3; next } { print $2 }' | sort | uniq | envsubst`
 
 stage_dir="${PWD}/${stage}"
 
