@@ -233,6 +233,8 @@ RUN mkdir /bin
 RUN mkdir /tmp
 RUN ln -sv bash /bin/sh
 RUN ln -sv /toolchain/bin/bash /bin/bash
+RUN mkdir -p /etc/ssl/certs
+RUN ln -s /toolchain/etc/ssl/certs/ca-certificates /etc/ssl/certs/ca-certificates
 WORKDIR /src
 COPY toolchain/checksums.* .
 WORKDIR /src/toolchain
@@ -253,9 +255,6 @@ FROM toolchain AS common-base
 WORKDIR /src
 COPY rootfs/common/checksums.* .
 WORKDIR /src/common
-# build ca-certificates
-RUN mkdir -p /etc/ssl/certs
-RUN ln -s /toolchain/etc/ssl/certs/ca-certificates /etc/ssl/certs/ca-certificates
 # Filesystem Hierarchy Standard
 COPY rootfs/common/fhs.sh .
 RUN /src/common/fhs.sh /rootfs
