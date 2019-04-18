@@ -221,7 +221,7 @@ RUN build.sh /src/protoc/protoc.sh
 COPY protoc/protoc-gen-go.sh .
 RUN build.sh /src/protoc/protoc-gen-go.sh
 
-# The toolchain stage provides the final image for the toolchain.
+# The toolchain target provides the final image for the toolchain.
 
 FROM scratch AS toolchain
 ENV PATH /toolchain/bin
@@ -245,3 +245,80 @@ RUN build.sh /src/toolchain/linux.sh
 ENV GOROOT /toolchain/go
 ENV CGO_ENABLED 0
 ENV PATH /bin:/usr/bin:/usr/local/bin:/toolchain/bin:/toolchain/go/bin
+
+# The common-base target provides the libraries and filesystem hierarchy
+# that is common between the rootfs and the initramfs.
+
+FROM toolchain AS common-base
+WORKDIR /src
+COPY rootfs/common/checksums.* .
+WORKDIR /src/common
+# build ca-certificates
+RUN mkdir -p /etc/ssl/certs
+RUN ln -s /toolchain/etc/ssl/certs/ca-certificates /etc/ssl/certs/ca-certificates
+# Filesystem Hierarchy Standard
+COPY rootfs/common/fhs.sh .
+RUN /src/common/fhs.sh /rootfs
+# ca-certificates
+COPY rootfs/common/ca-certificates.sh .
+RUN ./ca-certificates.sh
+# xfsprogs
+COPY rootfs/common/xfsprogs.sh .
+RUN build.sh /src/common/xfsprogs.sh
+# dosfstools
+COPY rootfs/common/dosfstools.sh .
+RUN build.sh /src/common/dosfstools.sh
+# syslinux
+COPY rootfs/common/syslinux.sh .
+RUN build.sh /src/common/syslinux.sh
+# libblkid
+RUN cp /toolchain/lib/libblkid.* /rootfs/lib
+# libuuid
+RUN cp /toolchain/lib/libuuid.* /rootfs/lib
+
+# The rootfs-base target provides the final rootfs image.
+
+FROM common-base AS rootfs-build
+WORKDIR /src
+COPY rootfs/base/checksums.* .
+WORKDIR /src/base
+# iptables
+COPY rootfs/base/iptables.sh .
+RUN build.sh /src/base/iptables.sh
+# libseccomp
+COPY rootfs/base/libseccomp.sh .
+RUN build.sh /src/base/libseccomp.sh
+# containerd
+COPY rootfs/base/containerd.sh .
+RUN build.sh /src/base/containerd.sh
+# runc
+COPY rootfs/base/runc.sh .
+RUN build.sh /src/base/runc.sh
+# CNI
+COPY rootfs/base/cni.sh .
+RUN build.sh /src/base/cni.sh
+# crictl
+COPY rootfs/base/crictl.sh .
+RUN build.sh /src/base/crictl.sh
+# kubeadm
+COPY rootfs/base/kubeadm.sh .
+RUN build.sh /src/base/kubeadm.sh
+# images
+COPY images /rootfs/usr/images
+# cleanup
+COPY rootfs/base/cleanup.sh .
+RUN ./cleanup.sh /rootfs
+# symlink
+COPY rootfs/symlink.sh .
+RUN ./symlink.sh /rootfs
+FROM scratch AS rootfs-base
+COPY --from=rootfs-build /rootfs /
+
+# The initramfs-base target provides the final initramfs image.
+
+FROM common-base AS initramfs-build
+# cleanup
+COPY rootfs/base/cleanup.sh .
+RUN ./cleanup.sh /rootfs
+FROM scratch AS initramfs-base
+COPY --from=initramfs-build /rootfs /
