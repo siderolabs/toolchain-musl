@@ -305,7 +305,7 @@ RUN build.sh /src/base/kubeadm.sh
 # images
 COPY images /rootfs/usr/images
 # cleanup
-COPY rootfs/base/cleanup.sh .
+COPY rootfs/cleanup.sh .
 RUN ./cleanup.sh /rootfs
 # symlink
 COPY rootfs/symlink.sh .
@@ -317,7 +317,7 @@ COPY --from=rootfs-build /rootfs /
 
 FROM common-base AS initramfs-build
 # cleanup
-COPY rootfs/base/cleanup.sh .
+COPY rootfs/cleanup.sh .
 RUN ./cleanup.sh /rootfs
 FROM scratch AS initramfs-base
 COPY --from=initramfs-build /rootfs /
