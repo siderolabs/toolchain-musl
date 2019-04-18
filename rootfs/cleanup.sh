@@ -20,7 +20,7 @@ find ${PREFIX} -type f -name \*.la -print0 | xargs -0 rm -rf || true
 find ${PREFIX}/lib ${PREFIX}/usr/lib -type f \( -name \*.so* -a ! -name \*dbg \) -exec strip --strip-unneeded {} ';' || true
 find ${PREFIX}/{bin,sbin} -type f -exec strip --strip-all {} ';' || true
 
-rm -rf \
+rm -rvf \
   ${PREFIX}/lib/gconv/ \
   ${PREFIX}/lib/pkgconfig/ \
   ${PREFIX}/include/* \

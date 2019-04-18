@@ -11,3 +11,4 @@ mkdir /rootfs
     --syslibdir=/lib
 make -j $(nproc)
 make install DESTDIR=/rootfs
+rm -rf /rootfs/include
