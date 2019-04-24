@@ -4,7 +4,7 @@ COMMON_ARGS = --progress=plain
 COMMON_ARGS += --frontend=dockerfile.v0
 COMMON_ARGS += --local context=.
 COMMON_ARGS += --local dockerfile=.
-COMMON_ARGS += --frontend-opt build-arg:TOOLCHAIN_IMAGE=$(TOOLCHAIN_IMAGE)
+COMMON_ARGS += --opt build-arg:TOOLCHAIN_IMAGE=$(TOOLCHAIN_IMAGE)
 
 all: toolchain
 
@@ -12,50 +12,40 @@ all: toolchain
 core:
 	@buildctl --addr $(BUILDKIT_HOST) \
 		build \
-		--exporter=docker \
-		--exporter-opt output=$@.tar \
-		--exporter-opt name=docker.io/autonomy/$@:$(TAG) \
-		--frontend-opt target=$@ \
+		--output type=docker,dest=$@.tar,name=docker.io/autonomy/$@:$(TAG) \
+		--opt target=$@ \
 		$(COMMON_ARGS)
 
 .PHONY: base
 base:
 	@buildctl --addr $(BUILDKIT_HOST) \
 		build \
-		--exporter=docker \
-		--exporter-opt output=$@.tar \
-		--exporter-opt name=docker.io/autonomy/$@:$(TAG) \
-		--frontend-opt target=$@ \
+		--output type=docker,dest=$@.tar,name=docker.io/autonomy/$@:$(TAG) \
+		--opt target=$@ \
 		$(COMMON_ARGS)
 
 .PHONY: extras
 extras:
 	@buildctl --addr $(BUILDKIT_HOST) \
 		build \
-		--exporter=docker \
-		--exporter-opt output=$@.tar \
-		--exporter-opt name=docker.io/autonomy/$@:$(TAG) \
-		--frontend-opt target=$@ \
+		--output type=docker,dest=$@.tar,name=docker.io/autonomy/$@:$(TAG) \
+		--opt target=$@ \
 		$(COMMON_ARGS)
 
 .PHONY: golang
 golang:
 	@buildctl --addr $(BUILDKIT_HOST) \
 		build \
-		--exporter=docker \
-		--exporter-opt output=$@.tar \
-		--exporter-opt name=docker.io/autonomy/$@:$(TAG) \
-		--frontend-opt target=$@ \
+		--output type=docker,dest=$@.tar,name=docker.io/autonomy/$@:$(TAG) \
+		--opt target=$@ \
 		$(COMMON_ARGS)
 
 .PHONY: protoc
 protoc:
 	@buildctl --addr $(BUILDKIT_HOST) \
 		build \
-		--exporter=docker \
-		--exporter-opt output=$@.tar \
-		--exporter-opt name=docker.io/autonomy/$@:$(TAG) \
-		--frontend-opt target=$@ \
+		--output type=docker,dest=$@.tar,name=docker.io/autonomy/$@:$(TAG) \
+		--opt target=$@ \
 		$(COMMON_ARGS)
 
 .PHONY: images
@@ -66,10 +56,8 @@ images:
 toolchain:
 	@buildctl --addr $(BUILDKIT_HOST) \
 		build \
-		--exporter=docker \
-		--exporter-opt output=$@.tar \
-		--exporter-opt name=docker.io/autonomy/$@:$(TAG) \
-		--frontend-opt target=$@ \
+		--output type=docker,dest=$@.tar,name=docker.io/autonomy/$@:$(TAG) \
+		--opt target=$@ \
 		$(COMMON_ARGS)
 	@docker load < $@.tar
 
@@ -77,10 +65,8 @@ toolchain:
 common-base:
 	@buildctl --addr $(BUILDKIT_HOST) \
 		build \
-		--exporter=docker \
-		--exporter-opt output=$@.tar \
-		--exporter-opt name=docker.io/autonomy/$@:$(TAG) \
-		--frontend-opt target=$@ \
+		--output type=docker,dest=$@.tar,name=docker.io/autonomy/$@:$(TAG) \
+		--opt target=$@ \
 		$(COMMON_ARGS)
 	@docker load < $@.tar
 
@@ -88,10 +74,8 @@ common-base:
 rootfs-base:
 	@buildctl --addr $(BUILDKIT_HOST) \
 		build \
-		--exporter=docker \
-		--exporter-opt output=$@.tar \
-		--exporter-opt name=docker.io/autonomy/$@:$(TAG) \
-		--frontend-opt target=$@ \
+		--output type=docker,dest=$@.tar,name=docker.io/autonomy/$@:$(TAG) \
+		--opt target=$@ \
 		$(COMMON_ARGS)
 	@docker load < $@.tar
 
@@ -99,10 +83,8 @@ rootfs-base:
 initramfs-base:
 	@buildctl --addr $(BUILDKIT_HOST) \
 		build \
-		--exporter=docker \
-		--exporter-opt output=$@.tar \
-		--exporter-opt name=docker.io/autonomy/$@:$(TAG) \
-		--frontend-opt target=$@ \
+		--output type=docker,dest=$@.tar,name=docker.io/autonomy/$@:$(TAG) \
+		--opt target=$@ \
 		$(COMMON_ARGS)
 	@docker load < $@.tar
 
