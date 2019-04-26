@@ -6,6 +6,8 @@ COMMON_ARGS += --local context=.
 COMMON_ARGS += --local dockerfile=.
 COMMON_ARGS += --opt build-arg:TOOLCHAIN_IMAGE=$(TOOLCHAIN_IMAGE)
 
+BUILDKIT_HOST ?= tcp://0.0.0.0:1234
+
 all: toolchain
 
 .PHONY: core

@@ -72,4 +72,5 @@ cd ${TMP}/build
 
 source versions.sh
 
-source "${1}"
+# Hide build stdout since this makes logs super spammy
+source "${1}" >/dev/null
