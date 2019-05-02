@@ -206,6 +206,8 @@ ENV CGO_ENABLED 0
 # go
 COPY golang/go.sh .
 RUN build.sh /src/golang/go.sh
+COPY golang/golintci.sh .
+RUN build.sh /src/golang/golintci.sh
 
 # The protoc stage provides...
 

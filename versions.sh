@@ -29,6 +29,7 @@ export gettext=0.19.8.1
 export git=2.20.1
 export gmp=6.1.2
 export go=1.12.1
+export golint=1.16.0
 export grep=3.1
 export gzip=1.9
 export hyperkube=1.14.1
