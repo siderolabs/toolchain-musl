@@ -54,6 +54,7 @@ export protobuf=3.7.1
 export protobufGo=1.3.1
 export runc=1.0.0-rc6
 export sed=4.5
+export socat=1.7.3.3
 export syslinux=6.03
 export tar=1.30
 export tcl=8.6.8

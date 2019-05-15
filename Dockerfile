@@ -281,6 +281,9 @@ FROM common-base AS rootfs-build
 WORKDIR /src
 COPY rootfs/base/checksums.* .
 WORKDIR /src/base
+# socat
+COPY rootfs/base/socat.sh .
+RUN build.sh /src/base/socat.sh
 # iptables
 COPY rootfs/base/iptables.sh .
 RUN build.sh /src/base/iptables.sh
