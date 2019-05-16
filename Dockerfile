@@ -281,6 +281,9 @@ FROM common-base AS rootfs-build
 WORKDIR /src
 COPY rootfs/base/checksums.* .
 WORKDIR /src/base
+# libressl
+COPY rootfs/base/libressl.sh .
+RUN build.sh /src/base/libressl.sh
 # socat
 COPY rootfs/base/socat.sh .
 RUN build.sh /src/base/socat.sh
