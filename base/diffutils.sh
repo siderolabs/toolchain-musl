@@ -1,7 +1,3 @@
-#!/bin/bash
-
-set -eou pipefail
-
 download https://ftp.gnu.org/gnu/diffutils/diffutils-${diffutils}.tar.xz
 
 ../configure \

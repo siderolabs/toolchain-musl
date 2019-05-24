@@ -1,7 +1,3 @@
-#!/bin/bash
-
-set -eou pipefail
-
 download https://tukaani.org/xz/xz-${xz}.tar.xz
 
 ../configure \

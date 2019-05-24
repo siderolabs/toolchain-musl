@@ -1,10 +1,7 @@
-#!/bin/bash
-
-set -eou pipefail
-
 download https://sourceforge.net/projects/tcl/files/Tcl/${tcl}/tcl-core${tcl}-src.tar.gz
 
-../unix/configure --prefix=${TOOLCHAIN}
+../unix/configure \
+    --prefix=${TOOLCHAIN}
 make -j $(nproc)
 make install
 case "${tcl}" in

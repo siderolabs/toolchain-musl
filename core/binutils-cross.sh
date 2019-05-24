@@ -1,7 +1,7 @@
 download https://ftp.gnu.org/gnu/binutils/binutils-${binutils}.tar.xz
 
 ../configure \
-    --build=${HOST} \
+    --build=${BUILD} \
     --host=${HOST} \
     --target=${TARGET} \
     --prefix=${TOOLCHAIN} \

@@ -2,7 +2,7 @@ exportcross
 
 download https://ftp.gnu.org/gnu/binutils/binutils-${binutils}.tar.xz
 ../configure \
-    --build=${HOST} \
+    --build=${BUILD} \
     --host=${HOST} \
     --prefix=${TOOLCHAIN} \
     --with-sysroot \

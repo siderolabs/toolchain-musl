@@ -74,3 +74,5 @@ source versions.sh
 
 # Hide build stdout since this makes logs super spammy
 source "${1}" >/dev/null
+
+rm -rf ${TMP}

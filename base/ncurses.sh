@@ -1,7 +1,3 @@
-#!/bin/bash
-
-set -eou pipefail
-
 download https://ftp.gnu.org/gnu/ncurses/ncurses-${ncurses}.tar.gz
 
 sed -i s/mawk// ../configure

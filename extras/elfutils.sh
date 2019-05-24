@@ -48,7 +48,7 @@ cp -v ../src/error.h ${TOOLCHAIN}/include
 
 ../configure \
     --prefix=${TOOLCHAIN} \
-	--without-bzlib \
+	  --without-bzlib \
     CFLAGS="${CFLAGS} -fPIC -Wno-error"
 make -C lib libeu.a -j $(nproc)
 make -C libelf -j $(nproc)

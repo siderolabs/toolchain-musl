@@ -1,8 +1,9 @@
-export LD_LIBRARY_PATH=${TOOLCHAIN}/lib
-
 download https://curl.haxx.se/download/curl-${curl}.tar.xz
 
 ../configure \
+    --build=aarch64-linux-musl \
+    --host=${HOST} \
+    --target=${TARGET} \
     --prefix=${TOOLCHAIN} \
     --disable-static \
     --enable-threaded-resolver \

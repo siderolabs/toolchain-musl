@@ -1,7 +1,3 @@
-#!/bin/bash
-
-set -eou pipefail
-
 download ftp://ftp.astron.com/pub/file/file-${file}.tar.gz
 
 ../configure \

@@ -1,7 +1,3 @@
-#!/bin/bash
-
-set -eou pipefail
-
 download https://www.kernel.org/pub/linux/utils/util-linux/v2.32/util-linux-${utilLinux}.tar.xz
 
 ../configure \

@@ -1,7 +1,3 @@
-#!/bin/bash
-
-set -eou pipefail
-
 download https://ftp.gnu.org/gnu/bash/bash-${bash}.tar.gz
 
 ../configure \

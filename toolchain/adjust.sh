@@ -2,13 +2,15 @@
 
 set -eoux pipefail
 
+export ARCH=armv7
+
 ln -sv /toolchain/lib /lib
 ln -sv /toolchain/include /include
 # ln -sfv /toolchain/lib/libgcc_s.so{,.1} /lib
 mv -v /toolchain/bin/{ld,ld-old}
-mv -v /toolchain/x86_64-linux-musl/bin/{ld,ld-old}
+mv -v /toolchain/${ARCH}-linux-musleabihf/bin/{ld,ld-old}
 mv -v /toolchain/bin/{ld-new,ld}
-ln -sv /toolchain/bin/ld /toolchain/x86_64-linux-musl/bin/ld
+ln -sv /toolchain/bin/ld /toolchain/${ARCH}-linux-musleabihf/bin/ld
 
 gcc -dumpspecs | sed -e "s@/toolchain@@g" \
     -e '/\*startfile_prefix_spec:/{n;s@.*@/lib/ @}'\
@@ -20,7 +22,7 @@ readelf -l a.out | grep ': /lib'
 grep -o '/lib.*/crt[1in].*succeeded' dummy.log
 grep -B1 '^ /include' dummy.log
 grep 'SEARCH.*/lib' dummy.log |sed 's|; |\n|g'
-grep ".*/lib/../lib/libc.so succeeded" dummy.log
+grep "/lib/libc.so succeeded" dummy.log
 rm -v dummy.c a.out dummy.log
 
 # Ensure that `make menuconfig` works for the kernel build.

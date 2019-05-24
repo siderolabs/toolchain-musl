@@ -3,11 +3,11 @@
 # The common stage provides...
 
 FROM alpine:3.8 AS common
-ENV ARCH x86_64
+ENV ARCH armv7
 ENV VENDOR talos
-ENV HOST x86_64-linux-musl
-ENV BUILD x86_64-linux-musl
-ENV TARGET ${ARCH}-${VENDOR}-linux-musl
+ENV BUILD armv7-linux-musleabihf
+ENV HOST armv7-linux-musleabihf
+ENV TARGET ${ARCH}-${VENDOR}-linux-musleabihf
 ENV SYSROOT /${VENDOR}
 ENV TOOLCHAIN /toolchain
 ENV PATH ${TOOLCHAIN}/bin:$PATH
@@ -18,9 +18,9 @@ RUN [ "ln", "-svf", "/bin/bash", "/bin/sh" ]
 COPY build.sh /bin
 COPY versions.sh /bin
 COPY common/version-check.sh /bin
-RUN version-check.sh
+#RUN version-check.sh
 
-# The core stage provides...
+# The core stage provides a crosscompiler for the target triplet.
 
 FROM common AS core
 WORKDIR /src
@@ -195,9 +195,10 @@ RUN build.sh /src/extras/cpio.sh
 COPY extras/strip.sh .
 RUN ./strip.sh
 
-# The golang stage provides...
+# The golang stage provides a go complier built against musl.
 
 FROM extras AS golang
+COPY go-linux-arm64-bootstrap.tbz /
 WORKDIR /src
 COPY golang/checksums.* .
 WORKDIR /src/golang
@@ -207,7 +208,7 @@ ENV CGO_ENABLED 0
 COPY golang/go.sh .
 RUN build.sh /src/golang/go.sh
 
-# The protoc stage provides...
+# The protoc stage provides the protoc and protoc-go binaries.
 
 FROM golang AS protoc
 WORKDIR /src

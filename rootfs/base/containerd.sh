@@ -4,6 +4,8 @@ set -eou pipefail
 
 export GOPATH=/go
 export GO111MODULE=on
+export GOARCH=arm
+export GOARM=7
 
 mkdir -p $GOPATH/src/github.com/containerd \
     && cd $GOPATH/src/github.com/containerd \

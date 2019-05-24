@@ -3,7 +3,7 @@ download https://ftp.gnu.org/gnu/gmp/gmp-${gmp}.tar.xz gmp
 download https://ftp.gnu.org/gnu/mpc/mpc-${mpc}.tar.gz mpc
 download https://ftp.gnu.org/gnu/gcc/gcc-${gcc}/gcc-${gcc}.tar.xz
 
-for file in ../gcc/config/{linux,i386/linux{,64}}.h; do
+for file in ../gcc/config/{aarch64/aarch64-linux,arm/{linux-eabi,linux-elf},linux,i386/linux{,64}}.h; do
   cp -uv $file{,.orig}
   sed -e "s@/lib\(64\)\?\(32\)\?/ld@${TOOLCHAIN}&@g" \
       -e "s@/usr@${TOOLCHAIN}@g" $file.orig > $file
@@ -16,10 +16,10 @@ EOF
   touch $file.orig
 done
 
-sed -e '/m64=/s/lib64/lib/' -i.orig ../gcc/config/i386/t-linux64
+sed -e '/mabi.lp64=/s/lib64/lib/' -i.orig ../gcc/config/aarch64/t-aarch64-linux
 
 ../configure \
-    --build=${HOST} \
+    --build=${BUILD} \
     --host=${HOST} \
     --target=${TARGET} \
     --prefix=${TOOLCHAIN} \

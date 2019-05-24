@@ -1,7 +1,5 @@
 download https://ftp.gnu.org/gnu/bc/bc-${bc}.tar.gz
 
-export LD_LIBRARY_PATH=${TOOLCHAIN}/lib
-
 cat > ../bc/fix-libmath_h << "EOF"
 #! /bin/bash
 sed -e '1   s/^/{"/' \
@@ -15,6 +13,8 @@ sed -e '$ s/$/0}/' \
 EOF
 
 sed -i -e '/flex/s/as_fn_error/: ;; # &/' ../configure
+
+cp ${TOOLCHAIN}/lib/libfl.* /lib
 
 ../configure \
     --prefix=${TOOLCHAIN} \

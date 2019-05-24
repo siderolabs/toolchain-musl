@@ -1,7 +1,3 @@
-#!/bin/bash
-
-set -eou pipefail
-
 download https://ftp.gnu.org/gnu/grep/grep-${grep}.tar.xz
 
 ../configure \
