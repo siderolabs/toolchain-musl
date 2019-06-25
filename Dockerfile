@@ -191,6 +191,9 @@ RUN build.sh /src/extras/git.sh
 # cpio
 COPY extras/cpio.sh .
 RUN build.sh /src/extras/cpio.sh
+# gperf
+COPY extras/gperf.sh .
+RUN build.sh /src/extras/gperf.sh
 # cleanup
 COPY extras/strip.sh .
 RUN ./strip.sh
@@ -308,6 +311,9 @@ RUN build.sh /src/base/crictl.sh
 # kubeadm
 COPY rootfs/base/kubeadm.sh .
 RUN build.sh /src/base/kubeadm.sh
+# eudev
+COPY rootfs/base/eudev.sh .
+RUN build.sh /src/base/eudev.sh
 # images
 COPY images /rootfs/usr/images
 # cleanup
