@@ -19,4 +19,5 @@ EOF
   --enable-hwdb \
   --disable-static
 make -j $(nproc)
+make install
 make install DESTDIR=/rootfs

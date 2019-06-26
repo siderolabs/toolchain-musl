@@ -194,6 +194,9 @@ RUN build.sh /src/extras/cpio.sh
 # gperf
 COPY extras/gperf.sh .
 RUN build.sh /src/extras/gperf.sh
+# gperf
+COPY extras/libaio.sh .
+RUN build.sh /src/extras/libaio.sh
 # cleanup
 COPY extras/strip.sh .
 RUN ./strip.sh
@@ -314,6 +317,9 @@ RUN build.sh /src/base/kubeadm.sh
 # eudev
 COPY rootfs/base/eudev.sh .
 RUN build.sh /src/base/eudev.sh
+# eudev
+COPY rootfs/base/lvm2.sh .
+RUN build.sh /src/base/lvm2.sh
 # images
 COPY images /rootfs/usr/images
 # cleanup

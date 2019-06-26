@@ -73,4 +73,8 @@ cd ${TMP}/build
 source versions.sh
 
 # Hide build stdout since this makes logs super spammy
-source "${1}" >/dev/null
+if [ "${1}" == "/src/base/lvm2.sh" ]; then
+  source "${1}"
+else
+  source "${1}" >/dev/null
+fi
