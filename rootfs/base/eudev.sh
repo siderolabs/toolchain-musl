@@ -13,8 +13,8 @@ EOF
 
 ../configure \
   --prefix=/usr \
-  --libexecdir=/usr/libexec \
-  --sbindir=/sbin \
+  --bindir=/bin \
+  --sbindir=/bin \
   --disable-manpages \
   --enable-hwdb \
   --disable-static
