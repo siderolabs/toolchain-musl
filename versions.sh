@@ -35,6 +35,7 @@ export grep=3.1
 export gzip=1.9
 export hyperkube=1.15.0
 export iptables=1.8.2
+export kmod=25
 export kubeadm=1.15.0
 export libressl=2.9.0
 export libseccomp=2.3.3
