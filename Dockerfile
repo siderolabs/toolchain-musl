@@ -194,6 +194,9 @@ RUN build.sh /src/extras/cpio.sh
 # gperf
 COPY extras/gperf.sh .
 RUN build.sh /src/extras/gperf.sh
+# kmod
+COPY extras/kmod.sh .
+RUN build.sh /src/extras/kmod.sh
 # cleanup
 COPY extras/strip.sh .
 RUN ./strip.sh
